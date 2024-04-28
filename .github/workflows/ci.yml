@@ -24,22 +24,8 @@ jobs:
       with:
         go-version: '1.20'
 
-    - name: Build Employee
-      run: |
-        cd employee
-        go build -v ./...
+    - name: Build
+      run: go build -v ./...
 
-    - name: Test Employee
-      run: |
-        cd employee
-        go test -v ./...
-
-    - name: Build Console
-      run: |
-        cd console
-        go build -v ./...
-
-    - name: Test Console
-      run: |
-        cd console
-        go test -v ./...
+    - name: Test
+      run: go test -v ./...
