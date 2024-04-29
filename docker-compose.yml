@@ -1,0 +1,42 @@
+# # production
+# version: '3.8'
+# services:
+#   app:
+#     build: .
+#     image: hello-world-app
+#     ports:
+#       - "8080:8080"
+
+# development
+version: '3.8'
+services:
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - gizoffer-network
+    command: go run ./app/main.go
+
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    env_file:
+      - .env
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - gizoffer-network
+
+networks:
+  gizoffer-network:
+    driver: bridge
+
+volumes:
+  db-data:
