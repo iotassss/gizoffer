@@ -13,7 +13,7 @@
 
 # development
 
-FROM golang:1.21.4 AS builder
+FROM golang:1.19 AS builder
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 go build -o /gizoffer

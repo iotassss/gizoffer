@@ -22,7 +22,8 @@ services:
       - db
     networks:
       - gizoffer-network
-    command: go run ./app/main.go
+    working_dir: /app
+    command: go run main.go
 
   db:
     image: mysql:5.7
