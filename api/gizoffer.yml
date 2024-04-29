@@ -13,11 +13,14 @@ tags:
   - name: offers
   # - name: tags
   - name: entries
+  - name: auth
 paths:
   /login:
     post:
-      summary: ログインしてJWTを取得
-      description: ユーザー名とパスワードを受け取り、認証に成功した場合にJWTを返す。
+      summary: Login
+      tags:
+        - auth
+      security: []
       requestBody:
         required: true
         content:
@@ -36,7 +39,7 @@ paths:
                   example: yourpassword
       responses:
         '200':
-          description: 認証成功、JWTを含むレスポンス
+          description: login successful
           content:
             application/json:
               schema:

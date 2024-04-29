@@ -3,18 +3,19 @@ package main
 
 import (
 	"log"
-	"net/http"
 
-	{{packageName}} "{{gitHost}}/{{gitUserId}}/{{gitRepoId}}/{{sourceFolder}}"
+	// WARNING!
+	// Pass --git-repo-id and --git-user-id properties when generating the code
+	//
+	sw "{{gitHost}}/{{gitUserId}}/{{gitRepoId}}{{#isGoSubmodule}}/{{packageName}}{{/isGoSubmodule}}/{{apiPath}}"
 )
 
 func main() {
-	log.Printf("Server started")
-{{#apiInfo}}{{#apis}}
-	{{classname}}Service := {{packageName}}.New{{classname}}Service()
-	{{classname}}Controller := {{packageName}}.New{{classname}}Controller({{classname}}Service)
-{{/apis}}{{/apiInfo}}
-	router := {{packageName}}.NewRouter({{#apiInfo}}{{#apis}}{{classname}}Controller{{^-last}}, {{/-last}}{{/apis}}{{/apiInfo}})
+	routes := sw.ApiHandleFunctions{}
 
-	log.Fatal(http.ListenAndServe(":{{serverPort}}", router))
+	log.Printf("Server started")
+
+	router := sw.NewRouter(routes)
+
+	log.Fatal(router.Run(":{{serverPort}}"))
 }
