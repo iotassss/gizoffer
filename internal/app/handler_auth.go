@@ -2,6 +2,7 @@ package app
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -58,5 +59,5 @@ func generateToken(userID string) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString([]byte("your_secret_key"))
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
