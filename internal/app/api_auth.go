@@ -13,13 +13,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AuthAPI struct {
-}
+type AuthAPI interface {
 
-// Post /login
-// Login 
-func (api *AuthAPI) LoginPost(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
 
+    // LoginPost Post /login
+    // Login 
+     LoginPost(c *gin.Context)
+
+}

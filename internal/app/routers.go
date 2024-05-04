@@ -93,10 +93,10 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			handleFunctions.EntriesAPI.EntriesIdGet,
 		},
 		{
-			"EntriesIdPut",
-			http.MethodPut,
-			"/entries/:id",
-			handleFunctions.EntriesAPI.EntriesIdPut,
+			"EntriesPost",
+			http.MethodPost,
+			"/entries",
+			handleFunctions.EntriesAPI.EntriesPost,
 		},
 		{
 			"OffersGet",

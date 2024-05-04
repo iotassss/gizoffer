@@ -8,7 +8,7 @@ generate-api:
 		-g go-gin-server \
 		-o /local/ \
 		-t /local/templates \
-		--additional-properties packageName=app,apiPath=internal/app \
+		--additional-properties packageName=app,apiPath=internal/app,interfaceOnly=true \
 		--git-user-id iotassss \
 		--git-repo-id gizoffer
 

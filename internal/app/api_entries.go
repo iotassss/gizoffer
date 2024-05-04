@@ -13,27 +13,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type EntriesAPI struct {
-}
+type EntriesAPI interface {
 
-// Delete /entries/:id
-// Delete an entry by ID 
-func (api *EntriesAPI) EntriesIdDelete(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
 
-// Get /entries/:id
-// Get an entry by ID 
-func (api *EntriesAPI) EntriesIdGet(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // EntriesIdDelete Delete /entries/:id
+    // Delete an entry by ID 
+     EntriesIdDelete(c *gin.Context)
 
-// Put /entries/:id
-// Update an entry by ID 
-func (api *EntriesAPI) EntriesIdPut(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // EntriesIdGet Get /entries/:id
+    // Get an entry by ID 
+     EntriesIdGet(c *gin.Context)
 
+    // EntriesPost Post /entries
+    // Create an entry 
+     EntriesPost(c *gin.Context)
+
+}

@@ -13,41 +13,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type OffersAPI struct {
-}
+type OffersAPI interface {
 
-// Get /offers
-// Get all offers 
-func (api *OffersAPI) OffersGet(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
 
-// Delete /offers/:id
-// Delete an offer by ID 
-func (api *OffersAPI) OffersIdDelete(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // OffersGet Get /offers
+    // Get all offers 
+     OffersGet(c *gin.Context)
 
-// Get /offers/:id
-// Get an offer by ID 
-func (api *OffersAPI) OffersIdGet(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // OffersIdDelete Delete /offers/:id
+    // Delete an offer by ID 
+     OffersIdDelete(c *gin.Context)
 
-// Put /offers/:id
-// Update an offer by ID 
-func (api *OffersAPI) OffersIdPut(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // OffersIdGet Get /offers/:id
+    // Get an offer by ID 
+     OffersIdGet(c *gin.Context)
 
-// Post /offers
-// Create an offer 
-func (api *OffersAPI) OffersPost(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // OffersIdPut Put /offers/:id
+    // Update an offer by ID 
+     OffersIdPut(c *gin.Context)
 
+    // OffersPost Post /offers
+    // Create an offer 
+     OffersPost(c *gin.Context)
+
+}

@@ -13,41 +13,27 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UsersAPI struct {
-}
+type UsersAPI interface {
 
-// Get /users
-// Get all users 
-func (api *UsersAPI) UsersGet(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
 
-// Delete /users/:id
-// Delete a user by ID 
-func (api *UsersAPI) UsersIdDelete(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // UsersGet Get /users
+    // Get all users 
+     UsersGet(c *gin.Context)
 
-// Get /users/:id
-// Get a user by ID 
-func (api *UsersAPI) UsersIdGet(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // UsersIdDelete Delete /users/:id
+    // Delete a user by ID 
+     UsersIdDelete(c *gin.Context)
 
-// Put /users/:id
-// Update a user by ID 
-func (api *UsersAPI) UsersIdPut(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // UsersIdGet Get /users/:id
+    // Get a user by ID 
+     UsersIdGet(c *gin.Context)
 
-// Post /users
-// Create a user 
-func (api *UsersAPI) UsersPost(c *gin.Context) {
-	// Your handler implementation
-	c.JSON(200, gin.H{"status": "OK"})
-}
+    // UsersIdPut Put /users/:id
+    // Update a user by ID 
+     UsersIdPut(c *gin.Context)
 
+    // UsersPost Post /users
+    // Create a user 
+     UsersPost(c *gin.Context)
+
+}
