@@ -207,6 +207,24 @@ paths:
       responses:
         '204':
           description: No content
+  /entries:
+    post:
+      summary: Create an entry
+      tags:
+        - entries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Entry'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Entry'
   /entries/{id}:
     get:
       summary: Get an entry by ID
@@ -217,25 +235,6 @@ paths:
       responses:
         '200':
           description: An entry
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Entry'
-    put:
-      summary: Update an entry by ID
-      tags:
-        - entries
-      parameters:
-        - $ref: '#/components/parameters/id'
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Entry'
-      responses:
-        '200':
-          description: Updated
           content:
             application/json:
               schema:

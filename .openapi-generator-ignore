@@ -36,3 +36,5 @@ git_push.sh
 .travis.yml
 test/*
 api/*
+go.mod
+go.sum
