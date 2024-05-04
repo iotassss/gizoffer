@@ -25,6 +25,7 @@ type Route struct {
 	Pattern	 	string
 	// HandlerFunc is the handler function of this route.
 	HandlerFunc	gin.HandlerFunc
+	Middleware  []gin.HandlerFunc
 }
 
 // NewRouter returns a new router.
@@ -38,17 +39,23 @@ func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctio
 		if route.HandlerFunc == nil {
 			route.HandlerFunc = DefaultHandleFunc
 		}
+
+		if route.Name != "LoginPost" {
+			route.Middleware = append(route.Middleware, AuthMiddleware())
+		}
+		handlerWithMiddleware := append(route.Middleware, route.HandlerFunc)
+
 		switch route.Method {
 		case http.MethodGet:
-			router.GET(route.Pattern, route.HandlerFunc)
+			router.GET(route.Pattern, handlerWithMiddleware...)
 		case http.MethodPost:
-			router.POST(route.Pattern, route.HandlerFunc)
+			router.POST(route.Pattern, handlerWithMiddleware...)
 		case http.MethodPut:
-			router.PUT(route.Pattern, route.HandlerFunc)
+			router.PUT(route.Pattern, handlerWithMiddleware...)
 		case http.MethodPatch:
-			router.PATCH(route.Pattern, route.HandlerFunc)
+			router.PATCH(route.Pattern, handlerWithMiddleware...)
 		case http.MethodDelete:
-			router.DELETE(route.Pattern, route.HandlerFunc)
+			router.DELETE(route.Pattern, handlerWithMiddleware...)
 		}
 	}
 
@@ -79,84 +86,98 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			http.MethodPost,
 			"/login",
 			handleFunctions.AuthAPI.LoginPost,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"EntriesIdDelete",
 			http.MethodDelete,
 			"/entries/:id",
 			handleFunctions.EntriesAPI.EntriesIdDelete,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"EntriesIdGet",
 			http.MethodGet,
 			"/entries/:id",
 			handleFunctions.EntriesAPI.EntriesIdGet,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"EntriesPost",
 			http.MethodPost,
 			"/entries",
 			handleFunctions.EntriesAPI.EntriesPost,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"OffersGet",
 			http.MethodGet,
 			"/offers",
 			handleFunctions.OffersAPI.OffersGet,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"OffersIdDelete",
 			http.MethodDelete,
 			"/offers/:id",
 			handleFunctions.OffersAPI.OffersIdDelete,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"OffersIdGet",
 			http.MethodGet,
 			"/offers/:id",
 			handleFunctions.OffersAPI.OffersIdGet,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"OffersIdPut",
 			http.MethodPut,
 			"/offers/:id",
 			handleFunctions.OffersAPI.OffersIdPut,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"OffersPost",
 			http.MethodPost,
 			"/offers",
 			handleFunctions.OffersAPI.OffersPost,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"UsersGet",
 			http.MethodGet,
 			"/users",
 			handleFunctions.UsersAPI.UsersGet,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"UsersIdDelete",
 			http.MethodDelete,
 			"/users/:id",
 			handleFunctions.UsersAPI.UsersIdDelete,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"UsersIdGet",
 			http.MethodGet,
 			"/users/:id",
 			handleFunctions.UsersAPI.UsersIdGet,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"UsersIdPut",
 			http.MethodPut,
 			"/users/:id",
 			handleFunctions.UsersAPI.UsersIdPut,
+			[]gin.HandlerFunc{},
 		},
 		{
 			"UsersPost",
 			http.MethodPost,
 			"/users",
 			handleFunctions.UsersAPI.UsersPost,
+			[]gin.HandlerFunc{},
 		},
 	}
 }

@@ -28,10 +28,10 @@ paths:
             schema:
               type: object
               required:
-                - username
+                - email
                 - password
               properties:
-                username:
+                email:
                   type: string
                   example: user@example.com
                 password:
