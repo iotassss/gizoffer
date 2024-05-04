@@ -20,3 +20,8 @@ generate-templates:
 docker-compose-down-up:
 	docker compose down -v
 	docker compose up -d
+
+docker-compose-remake-app:
+	docker compose stop app
+	docker compose rm -f app
+	docker compose up -d app
