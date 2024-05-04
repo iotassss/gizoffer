@@ -5,21 +5,36 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (db *GizofferDB) UserSeed() {
+	password1 := "password1"
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password1), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+	hashedPassword1 := string(bytes)
+
+	password2 := "password2"
+	bytes, err = bcrypt.GenerateFromPassword([]byte(password2), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+	hashedPassword2 := string(bytes)
+
 	users := []User{
 		{
 			UUID:           uuid.New().String(),
 			Name:           "John Doe",
 			Email:          "john@gmail.com",
-			HashedPassword: "password",
+			HashedPassword: hashedPassword1,
 		},
 		{
 			UUID:           uuid.New().String(),
 			Name:           "Jane Doe",
 			Email:          "jane@gmail.com",
-			HashedPassword: "password",
+			HashedPassword: hashedPassword2,
 		},
 	}
 	result := db.Create(&users)
