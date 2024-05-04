@@ -16,11 +16,11 @@
 FROM golang:1.19 AS builder
 WORKDIR /app
 COPY . .
-RUN CGO_ENABLED=0 go build -o /gizoffer
+RUN CGO_ENABLED=0 go build -o /app/bin/gizoffer ./cmd/app/main.go
 
 FROM alpine:latest
 RUN apk add --no-cache bash
 RUN apk add go
-COPY --from=builder /gizoffer /gizoffer
+COPY --from=builder /app/bin/gizoffer /gizoffer
 EXPOSE 80
 CMD ["/gizoffer"]

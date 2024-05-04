@@ -16,3 +16,7 @@ generate-templates:
 	docker run --rm -v "${PWD}:/local" openapitools/openapi-generator-cli:v7.5.0 author template \
 		-g go-gin-server \
 		-o /local/templates
+
+docker-compose-down-up:
+	docker compose down -v
+	docker compose up -d

@@ -10,21 +10,6 @@
 # development
 version: '3.8'
 services:
-  app:
-    build: .
-    volumes:
-      - .:/app
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    depends_on:
-      - db
-    networks:
-      - gizoffer-network
-    working_dir: /app
-    command: go run main.go
-
   db:
     image: mysql:5.7
     platform: linux/amd64
@@ -34,10 +19,46 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - gizoffer-network
-
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+  # db-init:
+  #   image: golang:1.21
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - .:/app
+  #   networks:
+  #     - gizoffer-network
+  #   working_dir: /app
+  #   command: go run ./cmd/database/refresh/main.go --seed=true
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  app:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    networks:
+      - gizoffer-network
+    working_dir: /app
+    command: go run ./cmd/app/main.go
+    depends_on:
+      db:
+        condition: service_healthy
+      # db-init:
+      #   condition: service_completed_successfully
 networks:
   gizoffer-network:
     driver: bridge
-
 volumes:
   db-data:
