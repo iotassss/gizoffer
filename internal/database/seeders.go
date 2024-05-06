@@ -23,12 +23,51 @@ func (db *GizofferDB) UserSeed() {
 	}
 	hashedPassword2 := string(bytes)
 
+	password3 := "password3"
+	bytes, err = bcrypt.GenerateFromPassword([]byte(password3), bcrypt.DefaultCost)
+	if err != nil {
+		return
+	}
+	hashedPassword3 := string(bytes)
+
 	users := []User{
 		{
 			UUID:           uuid.New().String(),
 			Name:           "John Doe",
 			Email:          "john@gmail.com",
 			HashedPassword: hashedPassword1,
+			MyOffers: []*Offer{
+				{
+					UUID:        uuid.New().String(),
+					UserID:      1,
+					Giz:         100,
+					ChatURL:     "https://chat.com",
+					Title:       "Title",
+					Description: "Description",
+					IsPublic:    true,
+					Deadline:    time.Now(),
+					EntryUsers: []*User{
+						{
+							UUID:           uuid.New().String(),
+							Name:           "Michael",
+							Email:          "michael@gmail.com",
+							HashedPassword: hashedPassword3,
+						},
+					},
+				},
+			},
+			EntryOffers: []*Offer{
+				{
+					UUID:        uuid.New().String(),
+					UserID:      2,
+					Giz:         100,
+					ChatURL:     "https://chat.com",
+					Title:       "Title",
+					Description: "Description",
+					IsPublic:    true,
+					Deadline:    time.Now(),
+				},
+			},
 		},
 		{
 			UUID:           uuid.New().String(),
@@ -50,7 +89,6 @@ func (db *GizofferDB) OfferSeed() {
 	offers := []Offer{
 		{
 			UUID:        uuid.New().String(),
-			UserID:      1, // TODO: generate id in this method
 			Giz:         100,
 			ChatURL:     "https://chat.com",
 			Title:       "Title",
@@ -60,7 +98,6 @@ func (db *GizofferDB) OfferSeed() {
 		},
 		{
 			UUID:        uuid.New().String(),
-			UserID:      2, // TODO: generate id in this method
 			Giz:         200,
 			ChatURL:     "https://chat.com",
 			Title:       "Title",
@@ -78,32 +115,6 @@ func (db *GizofferDB) OfferSeed() {
 	}
 }
 
-func (db *GizofferDB) EntrySeed() {
-	entries := []Entry{
-		{
-			UUID:       uuid.New().String(),
-			OfferID:    1, // TODO: generate id in this method
-			UserID:     2, // TODO: generate id in this method
-			IsApproved: true,
-		},
-		{
-			UUID:       uuid.New().String(),
-			OfferID:    2, // TODO: generate id in this method
-			UserID:     1, // TODO: generate id in this method
-			IsApproved: true,
-		},
-	}
-	result := db.Create(&entries)
-
-	if result.Error != nil {
-		log.Printf("failed to seed: %v", result.Error)
-	} else {
-		log.Printf("entry seeded successfully")
-	}
-}
-
 func (db *GizofferDB) Seed() {
 	db.UserSeed()
-	db.OfferSeed()
-	db.EntrySeed()
 }

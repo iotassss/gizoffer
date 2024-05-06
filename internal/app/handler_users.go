@@ -5,7 +5,9 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/iotassss/gizoffer/internal/database"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserHandler struct {
@@ -18,36 +20,46 @@ func NewUserHandler(db *database.GizofferDB) *UserHandler {
 	}
 }
 
-func (h *UserHandler) UsersGet(c *gin.Context) {
-	// ここにGet all usersのビジネスロジックを実装
-	c.JSON(http.StatusOK, gin.H{"message": "All users fetched successfully"})
-}
-
-func (h *UserHandler) UsersIdDelete(c *gin.Context) {
-	// ここにDelete a user by IDのビジネスロジックを実装
-	c.JSON(http.StatusOK, gin.H{"message": "User deleted successfully"})
-}
-
-func (h *UserHandler) UsersIdGet(c *gin.Context) {
-	// パスパラメータからIDを取得
+func (h *UserHandler) UsersUuidGet(c *gin.Context) {
 	id := c.Param("id")
 
 	// c.JSON(http.StatusOK, gin.H{"message": "User fetched successfully"})
 	c.JSON(http.StatusOK, gin.H{"message": fmt.Sprintf("User %s fetched successfully", id)})
 }
 
-func (h *UserHandler) UsersIdPut(c *gin.Context) {
-	// ここにUpdate a user by IDのビジネスロジックを実装
-	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully"})
-}
-
 func (h *UserHandler) UsersPost(c *gin.Context) {
-	// リクエストボディからユーザ情報を取得
-	body := struct {
-		Name string `json:"name"`
-		Age  int    `json:"age"`
-	}{}
-	c.BindJSON(&body)
+	var userPostRequest UserPostRequest
+	if err := c.ShouldBindJSON(&userPostRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
+	// TODO: validation
+
+	// UUID
+	uuid := uuid.New().String()
+
+	// hashed password
+	password := userPostRequest.Password
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+	hashedPassword := string(bytes)
+
+	user := database.User{
+		UUID:           uuid,
+		Email:          userPostRequest.Email,
+		Name:           userPostRequest.Name,
+		HashedPassword: hashedPassword,
+	}
+
+	result := h.DB.Create(&user)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"user_id": uuid})
 }

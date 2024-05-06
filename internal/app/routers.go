@@ -71,8 +71,6 @@ type ApiHandleFunctions struct {
 
 	// Routes for the AuthAPI part of the API
 	AuthAPI AuthAPI
-	// Routes for the EntriesAPI part of the API
-	EntriesAPI EntriesAPI
 	// Routes for the OffersAPI part of the API
 	OffersAPI OffersAPI
 	// Routes for the UsersAPI part of the API
@@ -89,52 +87,10 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			[]gin.HandlerFunc{},
 		},
 		{
-			"EntriesIdDelete",
-			http.MethodDelete,
-			"/entries/:id",
-			handleFunctions.EntriesAPI.EntriesIdDelete,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"EntriesIdGet",
-			http.MethodGet,
-			"/entries/:id",
-			handleFunctions.EntriesAPI.EntriesIdGet,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"EntriesPost",
-			http.MethodPost,
-			"/entries",
-			handleFunctions.EntriesAPI.EntriesPost,
-			[]gin.HandlerFunc{},
-		},
-		{
 			"OffersGet",
 			http.MethodGet,
 			"/offers",
 			handleFunctions.OffersAPI.OffersGet,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"OffersIdDelete",
-			http.MethodDelete,
-			"/offers/:id",
-			handleFunctions.OffersAPI.OffersIdDelete,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"OffersIdGet",
-			http.MethodGet,
-			"/offers/:id",
-			handleFunctions.OffersAPI.OffersIdGet,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"OffersIdPut",
-			http.MethodPut,
-			"/offers/:id",
-			handleFunctions.OffersAPI.OffersIdPut,
 			[]gin.HandlerFunc{},
 		},
 		{
@@ -145,31 +101,38 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			[]gin.HandlerFunc{},
 		},
 		{
-			"UsersGet",
-			http.MethodGet,
-			"/users",
-			handleFunctions.UsersAPI.UsersGet,
-			[]gin.HandlerFunc{},
-		},
-		{
-			"UsersIdDelete",
+			"OffersUuidDelete",
 			http.MethodDelete,
-			"/users/:id",
-			handleFunctions.UsersAPI.UsersIdDelete,
+			"/offers/:uuid",
+			handleFunctions.OffersAPI.OffersUuidDelete,
 			[]gin.HandlerFunc{},
 		},
 		{
-			"UsersIdGet",
+			"OffersUuidEntryDelete",
+			http.MethodDelete,
+			"/offers/:uuid/entry",
+			handleFunctions.OffersAPI.OffersUuidEntryDelete,
+			[]gin.HandlerFunc{},
+		},
+		{
+			"OffersUuidEntryPost",
+			http.MethodPost,
+			"/offers/:uuid/entry",
+			handleFunctions.OffersAPI.OffersUuidEntryPost,
+			[]gin.HandlerFunc{},
+		},
+		{
+			"OffersUuidGet",
 			http.MethodGet,
-			"/users/:id",
-			handleFunctions.UsersAPI.UsersIdGet,
+			"/offers/:uuid",
+			handleFunctions.OffersAPI.OffersUuidGet,
 			[]gin.HandlerFunc{},
 		},
 		{
-			"UsersIdPut",
+			"OffersUuidPut",
 			http.MethodPut,
-			"/users/:id",
-			handleFunctions.UsersAPI.UsersIdPut,
+			"/offers/:uuid",
+			handleFunctions.OffersAPI.OffersUuidPut,
 			[]gin.HandlerFunc{},
 		},
 		{
@@ -177,6 +140,13 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			http.MethodPost,
 			"/users",
 			handleFunctions.UsersAPI.UsersPost,
+			[]gin.HandlerFunc{},
+		},
+		{
+			"UsersUuidGet",
+			http.MethodGet,
+			"/users/:uuid",
+			handleFunctions.UsersAPI.UsersUuidGet,
 			[]gin.HandlerFunc{},
 		},
 	}

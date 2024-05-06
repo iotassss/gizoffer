@@ -9,11 +9,7 @@
 
 package app
 
-type Entry struct {
+type UserPostResponse struct {
 
-	Id int32 `json:"id,omitempty"`
-
-	UserId int32 `json:"user_id"`
-
-	OfferId int32 `json:"offer_id"`
+	Uuid string `json:"uuid,omitempty"`
 }

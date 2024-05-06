@@ -13,15 +13,21 @@ import (
 	"time"
 )
 
-type Offer struct {
+type OfferGetResponse struct {
 
-	Id int32 `json:"id,omitempty"`
+	Uuid string `json:"uuid"`
 
 	Title string `json:"title"`
 
 	Description string `json:"description"`
 
+	ChatUrl string `json:"chat_url,omitempty"`
+
+	Giz int32 `json:"giz,omitempty"`
+
 	IsPublic bool `json:"is_public"`
 
 	Deadline time.Time `json:"deadline"`
+
+	EntryUsers []UserGetResponse `json:"entry_users,omitempty"`
 }

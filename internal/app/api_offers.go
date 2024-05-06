@@ -15,25 +15,31 @@ import (
 
 type OffersAPI interface {
 
+	// OffersGet Get /offers
+	// Get all offers
+	OffersGet(c *gin.Context)
 
-    // OffersGet Get /offers
-    // Get all offers 
-     OffersGet(c *gin.Context)
+	// OffersPost Post /offers
+	// Create an offer
+	OffersPost(c *gin.Context)
 
-    // OffersIdDelete Delete /offers/:id
-    // Delete an offer by ID 
-     OffersIdDelete(c *gin.Context)
+	// OffersUuidDelete Delete /offers/:uuid
+	// Delete an offer by UUID
+	OffersUuidDelete(c *gin.Context)
 
-    // OffersIdGet Get /offers/:id
-    // Get an offer by ID 
-     OffersIdGet(c *gin.Context)
+	// OffersUuidEntryDelete Delete /offers/:uuid/entry
+	// Cancel an entry by UUID
+	OffersUuidEntryDelete(c *gin.Context)
 
-    // OffersIdPut Put /offers/:id
-    // Update an offer by ID 
-     OffersIdPut(c *gin.Context)
+	// OffersUuidEntryPost Post /offers/:uuid/entry
+	// Entry an offer by UUID
+	OffersUuidEntryPost(c *gin.Context)
 
-    // OffersPost Post /offers
-    // Create an offer 
-     OffersPost(c *gin.Context)
+	// OffersUuidGet Get /offers/:uuid
+	// Get an offer by UUID
+	OffersUuidGet(c *gin.Context)
 
+	// OffersUuidPut Put /offers/:uuid
+	// Update an offer by UUID
+	OffersUuidPut(c *gin.Context)
 }

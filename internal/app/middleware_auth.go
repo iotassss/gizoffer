@@ -10,11 +10,6 @@ import (
 )
 
 func AuthMiddleware() gin.HandlerFunc {
-	// return func(c *gin.Context) {
-	// 	log.Printf("Middleware for authentication is not implemented yet.")
-	// 	c.Next()
-	// }
-
 	// WIP: Implement authentication middleware
 
 	return func(c *gin.Context) {
@@ -39,7 +34,7 @@ func AuthMiddleware() gin.HandlerFunc {
 		// Check if Issuer is correct
 		// Check if ExpiresAt is in the future
 
-		c.Set("userID", claims.Subject) // ユーザーIDをコンテキストにセット
+		c.Set("userUUID", claims.Subject) // ユーザーIDをコンテキストにセット
 		c.Next()
 	}
 }

@@ -9,17 +9,9 @@
 
 package app
 
-import (
-	"github.com/gin-gonic/gin"
-)
+type UserGetResponse struct {
 
-type UsersAPI interface {
+	Uuid string `json:"uuid"`
 
-	// UsersPost Post /users
-	// Create a user
-	UsersPost(c *gin.Context)
-
-	// UsersUuidGet Get /users/:uuid
-	// Get a user by UUID
-	UsersUuidGet(c *gin.Context)
+	Name string `json:"name"`
 }

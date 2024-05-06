@@ -9,17 +9,11 @@
 
 package app
 
-import (
-	"github.com/gin-gonic/gin"
-)
+type UserPostRequest struct {
 
-type UsersAPI interface {
+	Name string `json:"name"`
 
-	// UsersPost Post /users
-	// Create a user
-	UsersPost(c *gin.Context)
+	Email string `json:"email"`
 
-	// UsersUuidGet Get /users/:uuid
-	// Get a user by UUID
-	UsersUuidGet(c *gin.Context)
+	Password string `json:"password"`
 }

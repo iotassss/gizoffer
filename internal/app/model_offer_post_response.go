@@ -9,13 +9,7 @@
 
 package app
 
-type User struct {
+type OfferPostResponse struct {
 
-	Id int32 `json:"id,omitempty"`
-
-	Name string `json:"name"`
-
-	Email string `json:"email"`
-
-	Password string `json:"password"`
+	Uuid string `json:"uuid,omitempty"`
 }
