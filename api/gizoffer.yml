@@ -10,16 +10,15 @@ security:
   - BearerAuth: []
 tags:
   - name: users
+    description: User management
   - name: offers
-  # - name: tags
-  - name: entries
-  - name: auth
+    description: Offer is a transactions that deals with side business and GIZ.
 paths:
   /login:
     post:
       summary: Login
       tags:
-        - auth
+        - users
       security: []
       requestBody:
         required: true
@@ -45,12 +44,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  uuid:
                     type: string
                     example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-                  message:
-                    type: string
-                    example: "Login successful."
         "401":
           description: 認証失敗
           content:

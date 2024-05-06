@@ -11,7 +11,5 @@ package app
 
 type LoginPost200Response struct {
 
-	Token string `json:"token,omitempty"`
-
-	Message string `json:"message,omitempty"`
+	Uuid string `json:"uuid,omitempty"`
 }

@@ -1,5 +1,4 @@
 internal/app/README.md
-internal/app/api_auth.go
 internal/app/api_offers.go
 internal/app/api_users.go
 internal/app/model__login_post_200_response.go

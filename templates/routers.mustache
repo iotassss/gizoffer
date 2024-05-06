@@ -32,7 +32,7 @@ func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctio
 			route.HandlerFunc = DefaultHandleFunc
 		}
 
-		if route.Name != "LoginPost" {
+		if route.Name != "LoginPost" && route.Name != "UsersPost" {
 			route.Middleware = append(route.Middleware, AuthMiddleware())
 		}
 		handlerWithMiddleware := append(route.Middleware, route.HandlerFunc)

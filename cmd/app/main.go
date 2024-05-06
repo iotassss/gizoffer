@@ -33,14 +33,10 @@ func main() {
 	log.SetOutput(f)
 
 	userHandler := sw.NewUserHandler(db)
-	authApi := sw.NewAuthHandler(db)
-	// entryApi := sw.NewEntryHandler(db)
 	offerApi := sw.NewOfferHandler(db)
 
 	routes := sw.ApiHandleFunctions{
-		UsersAPI: userHandler,
-		AuthAPI:  authApi,
-		// EntriesAPI: entryApi,
+		UsersAPI:  userHandler,
 		OffersAPI: offerApi,
 	}
 

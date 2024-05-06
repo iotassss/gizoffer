@@ -15,6 +15,10 @@ import (
 
 type UsersAPI interface {
 
+	// LoginPost Post /login
+	// Login
+	LoginPost(c *gin.Context)
+
 	// UsersPost Post /users
 	// Create a user
 	UsersPost(c *gin.Context)

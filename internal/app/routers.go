@@ -18,13 +18,13 @@ import (
 // Route is the information for every URI.
 type Route struct {
 	// Name is the name of this Route.
-	Name		string
+	Name string
 	// Method is the string for the HTTP method. ex) GET, POST etc..
-	Method		string
+	Method string
 	// Pattern is the pattern of the URI.
-	Pattern	 	string
+	Pattern string
 	// HandlerFunc is the handler function of this route.
-	HandlerFunc	gin.HandlerFunc
+	HandlerFunc gin.HandlerFunc
 	Middleware  []gin.HandlerFunc
 }
 
@@ -40,7 +40,7 @@ func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctio
 			route.HandlerFunc = DefaultHandleFunc
 		}
 
-		if route.Name != "LoginPost" {
+		if route.Name != "LoginPost" && route.Name != "UsersPost" {
 			route.Middleware = append(route.Middleware, AuthMiddleware())
 		}
 		handlerWithMiddleware := append(route.Middleware, route.HandlerFunc)
@@ -69,8 +69,6 @@ func DefaultHandleFunc(c *gin.Context) {
 
 type ApiHandleFunctions struct {
 
-	// Routes for the AuthAPI part of the API
-	AuthAPI AuthAPI
 	// Routes for the OffersAPI part of the API
 	OffersAPI OffersAPI
 	// Routes for the UsersAPI part of the API
@@ -78,14 +76,7 @@ type ApiHandleFunctions struct {
 }
 
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {
-	return []Route{ 
-		{
-			"LoginPost",
-			http.MethodPost,
-			"/login",
-			handleFunctions.AuthAPI.LoginPost,
-			[]gin.HandlerFunc{},
-		},
+	return []Route{
 		{
 			"OffersGet",
 			http.MethodGet,
@@ -133,6 +124,13 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			http.MethodPut,
 			"/offers/:uuid",
 			handleFunctions.OffersAPI.OffersUuidPut,
+			[]gin.HandlerFunc{},
+		},
+		{
+			"LoginPost",
+			http.MethodPost,
+			"/login",
+			handleFunctions.UsersAPI.LoginPost,
 			[]gin.HandlerFunc{},
 		},
 		{
