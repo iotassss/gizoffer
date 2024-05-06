@@ -11,29 +11,41 @@ package main
 
 import (
 	"log"
+	"os"
 
 	sw "github.com/iotassss/gizoffer/internal/app"
 	"github.com/iotassss/gizoffer/internal/database"
 )
 
+// TODO:
+// Add middleware for authentication
+
 func main() {
 	db := database.Connect()
+	// defer db.Close()
+
+	// logをファイルに出力する
+	f, err := os.OpenFile("app.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalf("error opening file: %v", err)
+	}
+	defer f.Close()
+	log.SetOutput(f)
 
 	userHandler := sw.NewUserHandler(db)
 	authApi := sw.NewAuthHandler(db)
-	entryApi := sw.NewEntryHandler(db)
+	// entryApi := sw.NewEntryHandler(db)
 	offerApi := sw.NewOfferHandler(db)
 
 	routes := sw.ApiHandleFunctions{
-		UsersAPI:   userHandler,
-		AuthAPI:    authApi,
-		EntriesAPI: entryApi,
-		OffersAPI:  offerApi,
+		UsersAPI: userHandler,
+		AuthAPI:  authApi,
+		// EntriesAPI: entryApi,
+		OffersAPI: offerApi,
 	}
-
-	log.Printf("Server started")
 
 	router := sw.NewRouter(routes)
 
+	log.Printf("Server started")
 	log.Fatal(router.Run(":8080"))
 }
